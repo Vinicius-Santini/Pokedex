@@ -10,13 +10,16 @@ import Container from "@material-ui/core/Container";
 
 const styles = () => ({
   gridContainer: {
-    // paddingLeft: "40px",
-    // paddingRight: "40px",
     paddingTop: "30px",
   },
   root: {
     flexGrow: 1,
     justifyItems: "center",
+  },
+  gridItems: {
+    display: "flex",
+    height: "100%",
+    flexGrow: 15,
   },
 });
 
@@ -44,29 +47,36 @@ class PokemonList extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <div className={classes.root}>
-          <Grid
-            container
-            spacing={4}
-            className={classes.gridContainer}
-            alignItems="center"
-          >
-            {this.state.pokemons ? (
-              this.state.pokemons.map((pokemon) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <PokemonCard
-                    key={pokemon.id}
-                    id={pokemon.id}
-                    nome={pokemon.nome}
-                    imageUrl={pokemon.imageUrl}
-                  />
-                </Grid>
-              ))
-            ) : (
-              <h1>Loading...</h1>
-            )}
-          </Grid>
-        </div>
+        <Grid
+          container
+          spacing={4}
+          // className={classes.gridContainer}
+        >
+          {this.state.pokemons ? (
+            this.state.pokemons.map((pokemon) => (
+              <Grid
+                item
+                // alignItems="center"
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={2}
+                justify="center"
+                className={classes.gridItems}
+              >
+                <PokemonCard
+                  key={pokemon.id}
+                  id={pokemon.id}
+                  nome={pokemon.nome}
+                  imageUrl={pokemon.imageUrl}
+                />
+              </Grid>
+            ))
+          ) : (
+            <h1>Loading...</h1>
+          )}
+        </Grid>
       </React.Fragment>
     );
   }
