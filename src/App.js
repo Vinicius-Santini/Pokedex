@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import PokemonList from "./Components/Pokemon/PokemonList";
 import Header from "../src/Components/Header/Header.js";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import * as serviceWorker from "./serviceWorker";
 
 function App() {
   return (
@@ -10,15 +12,6 @@ function App() {
       <PokemonList />
     </React.Fragment>
   );
-}
-
-{
-  /* <Fragment>
-  <Header />
-  <div className="container mb-10">
-    <PokemonList />
-  </div>
-</Fragment>; */
 }
 
 export default App;
