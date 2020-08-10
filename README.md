@@ -10,7 +10,7 @@
  O objetivo deste projeto é consumir a [PokeAPI](https://pokeapi.co/) utilizando **React.js**.
  
  ## Outros:
-###### O que gostaria de adicionar/ter adicionado ao projeto (não foi possível implementar até essa data pelo tempo):
+###### O que gostaria de adicionar/ter adicionado ao projeto (não foi possível implementar até essa data):
 
 - Evolução: infelizmente não foi implementada o consumo da API de evolução, as evoluções do pokemon não aparecem ao clicar nele, porém todos os outros detalhes estão disponíveis. 
 
