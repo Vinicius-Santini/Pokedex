@@ -12,7 +12,7 @@ const styles = () => ({
     paddingTop: "30px",
     width: "100%",
     margin: 0,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eeeeee",
   },
   root: {
     flexGrow: 1,
@@ -29,7 +29,7 @@ const styles = () => ({
     },
   },
   pagesDiv: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eeeeee",
     justify: "center",
     display: "flex",
     justifyContent: "space-around",
@@ -38,7 +38,7 @@ const styles = () => ({
     width: "50%",
   },
   searchBardiv: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eeeeee",
     paddingTop: "40px",
     display: "flex",
     justifyContent: "space-around",
@@ -50,6 +50,7 @@ class PokemonList extends Component {
     super(props);
     this.state = {
       pokemon: null,
+      pokemonsView: null,
     };
     this.handlePageChange = this.handlePageChange.bind(this);
   }
@@ -65,7 +66,7 @@ class PokemonList extends Component {
           imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
         };
       });
-      this.setState({ pokemons, count: res.count });
+      this.setState({ pokemons, pokemonsView: pokemons, count: res.count });
     });
   }
 
@@ -77,22 +78,33 @@ class PokemonList extends Component {
     this.getPokemonList(page);
   }
 
+  searchFunction(value) {
+    const { pokemons } = this.state;
+
+    const filtereds = pokemons.filter((x) => {
+      return x.nome.toLowerCase().includes(value) || x.id.toString() === value;
+    });
+    this.setState({
+      pokemonsView: filtereds,
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>
+      <>
         <div className={classes.searchBardiv}>
           <SearchBar
             placeholder="Pesquise pelo nome ou número"
             className={classes.searchBar}
             value={this.state.value}
-            onChange={(newValue) => this.setState({ value: newValue })}
+            onChange={(value) => this.searchFunction(value)}
           />
         </div>
 
         <Grid container spacing={4} className={classes.gridContainer}>
-          {this.state.pokemons ? (
-            this.state.pokemons.map((pokemon) => (
+          {this.state.pokemonsView ? (
+            this.state.pokemonsView.map((pokemon) => (
               <Grid
                 item
                 xs={12}
@@ -122,7 +134,7 @@ class PokemonList extends Component {
             size="large"
           />
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

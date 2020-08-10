@@ -1,42 +1,115 @@
 import React, { Component } from "react";
 import ApiService from "../../utils/ApiService";
 import Header from "../Header/Header";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import { capitalizeFirstLetter } from "../../utils/StringUtils";
 
-const useStyles = makeStyles(() => ({
-  box: {
-    height: "100%",
-    width: "100%",
-    // position: "absolute",
-    color: "#f5f5f5",
+const styles = () => ({
+  divPai: {
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    width: "70%",
+    margin: "auto",
   },
-}));
+  image: {
+    flexGrow: "2",
+    width: "30%",
+  },
+  divStats: {
+    flexGrow: "3",
+    display: "flex",
+    flexDirection: "column",
+  },
+  rowStats: {
+    flexDirection: "row",
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  cardDiv: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "30px",
+  },
+  stats: {
+    display: "flex",
+    border: "1px solid",
+    boxShadow: "2px 2px 2px #888",
+    width: "100%",
+    padding: "4px",
+  },
+});
 
-const Pokemon = (props) => {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Header />
-      <div className="columns">
-        <div className="column">
-          <div style={{ padding: 20 }}>{/* <img src={} /> */}</div>
-        </div>
-        <div className="column is-three-quarters pokemon-info">
-          <div className="content">
-            <h1>{props.match.params.id}</h1>
+class Pokemon extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.match.params.id,
+      nome: null,
+      imageUrl: null,
+      altura: null,
+      tipos: null,
+    };
+  }
 
-            <h2
-              className="subtitle is-2 has-text-weight-light"
-              style={{ display: "inline-block" }}
-            ></h2>
+  getPokemon() {
+    ApiService.GetPokemon(this.props.match.params.id).then((res) => {
+      const pokemon = res;
+      let atributos = pokemon.stats.map((elem) => {
+        const statName = elem.stat.name;
+        const stat = elem.base_stat;
+        return {
+          statName,
+          stat,
+        };
+      });
+
+      let tipos = pokemon.types.map((elem) => elem.type.name);
+      const tiposFixed = tipos.join(", ");
+      this.setState({
+        nome: pokemon.name,
+        imageUrl: pokemon.sprites.front_default,
+        altura: pokemon.height,
+        tipos: tiposFixed,
+        stats: atributos,
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.getPokemon(this.props.match.params.id);
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <>
+        <Header />
+        <div className={classes.divPai}>
+          <img src={this.state.imageUrl} className={classes.image}></img>
+          <div class="column" className={classes.divStats}>
+            <div class="column">
+              <h1 className={classes.stats}>
+                Nome: {capitalizeFirstLetter(this.state.nome)}
+              </h1>
+              <h1 className={classes.stats}>Número: {this.state.id}</h1>
+              {this.state.stats != null ? (
+                this.state.stats.map((elem) => (
+                  <h1 className={classes.stats}>
+                    {capitalizeFirstLetter(elem.statName)}: {elem.stat}
+                  </h1>
+                ))
+              ) : (
+                <h1>Loading...</h1>
+              )}
+              <h1 className={classes.stats}>Tipos: {this.state.tipos}</h1>
+            </div>
           </div>
         </div>
-      </div>
-    </React.Fragment>
-  );
-};
+      </>
+    );
+  }
+}
 
-export default Pokemon;
+export default withStyles(styles())(Pokemon);

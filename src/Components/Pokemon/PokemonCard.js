@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
   media: {
     height: 360,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#fafafa",
   },
   flex: {
     display: "flex",
@@ -25,15 +25,18 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   numero: {
-    color: "#757575",
+    color: "#ffcdd2",
     fontSize: "17px",
   },
   fav: {
-    color: "#ef5350",
+    color: "#ffcdd2",
   },
   nome: {
-    color: "#212121",
+    color: "#fafafa",
     fontSize: "19px",
+  },
+  cardC: {
+    backgroundColor: "#e53935",
   },
 }));
 
@@ -47,9 +50,8 @@ const PokemonCard = ({ id, nome, imageUrl }) => {
     >
       <CardActionArea>
         <CardMedia className={classes.media} image={imageUrl} />
-        <CardContent>
+        <CardContent className={classes.cardC}>
           <Typography
-            color="textSecondary"
             component="h5"
             className={`${classes.flex} ${classes.numero}`}
           >
@@ -58,7 +60,7 @@ const PokemonCard = ({ id, nome, imageUrl }) => {
               <FavoriteBorderIcon className={classes.fav}></FavoriteBorderIcon>
             </IconButton>
           </Typography>
-          <Typography color="primary" component="h5" className={classes.nome}>
+          <Typography component="h5" className={classes.nome}>
             {nome}
           </Typography>
         </CardContent>
