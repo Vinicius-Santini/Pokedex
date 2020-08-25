@@ -7,7 +7,8 @@
  
  
  ## Descrição:
- O objetivo deste projeto é consumir a [PokeAPI](https://pokeapi.co/) utilizando **React.js**.
+ Este projeto foi desenvolvido em cerca de dois dias e o objetivo dele é consumir a [PokeAPI](https://pokeapi.co/) utilizando **React.js**.
+ (Devido ao pouco tempo utilizado, ainda desejo realizar muitas melhorias que são necessárias ao meu ver)
  
  ## Outros:
 ###### O que gostaria de adicionar/ter adicionado ao projeto (não foi possível implementar até essa data):
